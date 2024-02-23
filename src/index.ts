@@ -4,7 +4,6 @@ import { serve } from '@hono/node-server';
 import { logger } from 'hono/logger';
 import { router as authRouter } from './modules/auth/auth.controller';
 // import { router as orgsRouter } from './modules/orgs/orgs.controller';
-import { router as blogsRouter } from './modules/blogs/blogs.controller';
 // import { router as usersRouter } from './modules/users/users.controller';
 // import { router as channelsRouter } from './modules/channels/channels.controller';
 // import { router as categoryRouter } from './modules/category/category.controller';
@@ -22,7 +21,6 @@ app.use(
   })
 );
 app.route('/', authRouter);
-app.route('/blogs', blogsRouter);
 
 // app.all('*', auth).route('/orgs', orgsRouter);
 // app.all('*', auth).route('/users', usersRouter);
