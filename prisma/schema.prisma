@@ -1,0 +1,46 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextIndex"]
+}
+
+model User {
+  id       String        @id @default(cuid())
+  email    String        @unique
+  password String
+  salt     String
+  tour     UsersOnTour[]
+  username String?       @unique
+  fullName String?
+
+  @@map("users")
+}
+
+model Tour {
+  id          String        @id @default(cuid())
+  name        String
+  description String
+  image       String
+  location    String
+  users       UsersOnTour[]
+
+  @@map("tour")
+}
+
+model UsersOnTour {
+  user   User   @relation(fields: [userID], references: [id])
+  userID String
+  tour   Tour   @relation(fields: [tourID], references: [id])
+  tourID String
+
+  @@id([tourID, userID])
+  @@map("users_on_tours")
+}

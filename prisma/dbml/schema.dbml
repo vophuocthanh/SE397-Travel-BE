@@ -1,0 +1,37 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table users {
+  id String [pk]
+  email String [unique, not null]
+  password String [not null]
+  salt String [not null]
+  tour users_on_tours [not null]
+  username String [unique]
+  fullName String
+}
+
+Table tour {
+  id String [pk]
+  name String [not null]
+  description String [not null]
+  image String [not null]
+  location String [not null]
+  users users_on_tours [not null]
+}
+
+Table users_on_tours {
+  user users [not null]
+  userID String [not null]
+  tour tour [not null]
+  tourID String [not null]
+
+  indexes {
+    (tourID, userID) [pk]
+  }
+}
+
+Ref: users_on_tours.userID > users.id
+
+Ref: users_on_tours.tourID > tour.id
