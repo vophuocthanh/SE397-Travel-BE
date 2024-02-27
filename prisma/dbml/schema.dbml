@@ -16,6 +16,7 @@ Table tour {
   id String [pk]
   name String [not null]
   description String [not null]
+  usersID String [not null]
   image String [not null]
   location String [not null]
   users users_on_tours [not null]

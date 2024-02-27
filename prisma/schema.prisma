@@ -28,6 +28,7 @@ model Tour {
   id          String        @id @default(cuid())
   name        String
   description String
+  usersID     String
   image       String
   location    String
   users       UsersOnTour[]
