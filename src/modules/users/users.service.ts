@@ -3,7 +3,7 @@ import { User } from '@prisma/client';
 
 export const UsersService = {
   updateMe: async (user: User, updateMeDto: { fullName: string }) => {
-    const { password, salt, ...me } = await db.user.update({
+    const { password, salt, email, ...me } = await db.user.update({
       where: {
         id: user.id,
       },

@@ -5,6 +5,7 @@ import { logger } from 'hono/logger';
 import { router as authRouter } from './modules/auth/auth.controller';
 import { router as tourRouter } from './modules/tour/tour.controller';
 import { router as usersRouter } from './modules/users/users.controller';
+import { router as locationRouter } from './modules/location/location.controller';
 // import { router as categoryRouter } from './modules/category/category.controller';
 import { auth } from './middlewares/auth';
 import { errorFilter } from './middlewares/error-filter';
@@ -22,8 +23,9 @@ app.use(
 app.route('/', authRouter);
 
 // app.all('*', auth).route('/orgs', orgsRouter);
-app.all('*', auth).route('/users', usersRouter);
-app.all('*', auth).route('/tour', tourRouter);
+app.route('/users', usersRouter);
+app.route('/tour', tourRouter);
+app.route('/location', locationRouter);
 // app.all('*', auth).route('/category', categoryRouter);
 
 app.notFound((c) => c.json({ status: 404, message: 'Not found' }, 404));
@@ -31,5 +33,5 @@ app.notFound((c) => c.json({ status: 404, message: 'Not found' }, 404));
 app.onError(errorFilter);
 
 serve(app, () => {
-  console.log('Server is running on http://localhost:3000');
+  console.log('🤖 Server is running on http://localhost:3000');
 });

@@ -3,6 +3,7 @@ import { paginationSchema } from '@/utils/schema';
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { TourService } from './tour.service';
+import { auth } from '@/middlewares/auth';
 
 export const router = new Hono();
 
@@ -12,11 +13,15 @@ router
     const search = c.req.query('search');
     const page = +c.req.query('page') || 1;
     const limit = +c.req.query('limit') || 3;
+    const pagination = {
+      skip: (page - 1) * limit,
+    };
 
     const data = await TourService.getAll(user?.id, {
       page,
       limit,
       search,
+      ...pagination,
     });
 
     return c.json(data);
@@ -31,15 +36,12 @@ router
       status: 200,
     });
   })
-  .post('/', async (c) => {
+  .post('/', auth, async (c) => {
     const user = c.get('user');
-    const { name, image, description, location } = await c.req.json();
+    const createTourInput = await c.req.json();
     const tour = await TourService.create({
-      name,
-      image,
-      description,
-      location,
       usersID: user?.id,
+      ...createTourInput,
     });
     return c.json({
       data: tour,

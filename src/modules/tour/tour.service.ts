@@ -3,8 +3,8 @@ import { Prisma } from '@prisma/client';
 import { BadRequestException } from '@/utils/exceptions';
 
 export const TourService = {
-  getAll: async (userId: string, { page = 1, limit = 10, search = '' }) => {
-    const orgs = await db.tour.findMany({
+  getAll: async (userId: string, { page = 1, limit = 6, search = '' }) => {
+    const tour = await db.tour.findMany({
       skip: (page - 1) * limit,
       take: limit,
       where: {
@@ -24,7 +24,7 @@ export const TourService = {
     });
 
     return {
-      data: orgs,
+      data: tour,
       total: total,
       totalPage: Math.ceil(total / limit),
     };
@@ -37,9 +37,9 @@ export const TourService = {
     });
     return tour;
   },
-  create: async (data: Prisma.TourCreateInput) => {
+  create: async (tour: Prisma.TourCreateInput) => {
     const createTour = await db.tour.create({
-      data,
+      data: tour,
     });
     return createTour;
   },

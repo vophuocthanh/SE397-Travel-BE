@@ -10,6 +10,7 @@ Table users {
   tour users_on_tours [not null]
   username String [unique]
   fullName String
+  location users_on_locations [not null]
 }
 
 Table tour {
@@ -19,7 +20,18 @@ Table tour {
   usersID String [not null]
   image String [not null]
   location String [not null]
+  price Float
   users users_on_tours [not null]
+}
+
+Table location {
+  id String [pk]
+  image String [not null]
+  country String [not null]
+  usersID String [not null]
+  location String [not null]
+  users users_on_locations [not null]
+  price Float
 }
 
 Table users_on_tours {
@@ -33,6 +45,21 @@ Table users_on_tours {
   }
 }
 
+Table users_on_locations {
+  user users [not null]
+  userID String [not null]
+  location location [not null]
+  locationID String [not null]
+
+  indexes {
+    (locationID, userID) [pk]
+  }
+}
+
 Ref: users_on_tours.userID > users.id
 
 Ref: users_on_tours.tourID > tour.id
+
+Ref: users_on_locations.userID > users.id
+
+Ref: users_on_locations.locationID > location.id
