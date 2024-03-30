@@ -21,8 +21,14 @@ model User {
   username String?           @unique
   fullName String?
   location UsersOnLocation[]
+  role       Role?           @default(USER)
 
   @@map("users")
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
 model Tour {
@@ -48,6 +54,14 @@ model Location {
   price    Float?
 
   @@map("location")
+}
+
+model Message {
+  id String @id @default(cuid())
+  message String
+  
+
+  @@map("message")
 }
 
 model UsersOnTour {

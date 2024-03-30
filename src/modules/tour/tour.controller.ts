@@ -4,6 +4,7 @@ import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { TourService } from './tour.service';
 import { auth } from '@/middlewares/auth';
+import { checkRole } from '@/middlewares/role';
 
 export const router = new Hono();
 
@@ -36,7 +37,7 @@ router
       status: 200,
     });
   })
-  .post('/', auth, async (c) => {
+  .post('/', auth, checkRole, async (c) => {
     const user = c.get('user');
     const createTourInput = await c.req.json();
     const tour = await TourService.create({

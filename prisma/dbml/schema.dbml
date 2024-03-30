@@ -11,6 +11,7 @@ Table users {
   username String [unique]
   fullName String
   location users_on_locations [not null]
+  role Role [default: 'USER']
 }
 
 Table tour {
@@ -34,6 +35,11 @@ Table location {
   price Float
 }
 
+Table message {
+  id String [pk]
+  message String [not null]
+}
+
 Table users_on_tours {
   user users [not null]
   userID String [not null]
@@ -54,6 +60,11 @@ Table users_on_locations {
   indexes {
     (locationID, userID) [pk]
   }
+}
+
+Enum Role {
+  USER
+  ADMIN
 }
 
 Ref: users_on_tours.userID > users.id
