@@ -1,85 +1,99 @@
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
+  datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+  }
 
-generator dbml {
-  provider = "prisma-dbml-generator"
-}
+  generator dbml {
+    provider = "prisma-dbml-generator"
+  }
 
-generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["fullTextIndex"]
-}
+  generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["fullTextIndex"]
+  }
 
-model User {
-  id       String            @id @default(cuid())
-  email    String            @unique
-  password String
-  salt     String
-  tour     UsersOnTour[]
-  username String?           @unique
-  fullName String?
-  location UsersOnLocation[]
-  role       Role?           @default(USER)
+  model User {
+    id       String            @id @default(cuid())
+    email    String            @unique
+    password String
+    salt     String
+    tour     UsersOnTour[]
+    username String?           @unique
+    fullName String?
+    location UsersOnLocation[]
+    role       Role?           @default(USER)
+    orderPay OdersPay[]
 
-  @@map("users")
-}
+    @@map("users")
+  }
 
-enum Role {
-  USER
-  ADMIN
-}
+  enum Role {
+    USER
+    ADMIN
+  }
 
-model Tour {
-  id          String        @id @default(cuid())
-  name        String
-  description String
-  usersID     String
-  image       String
-  location    String
-  price       Float?
-  users       UsersOnTour[]
+  model Tour {
+    id          String        @id @default(cuid())
+    name        String
+    description String
+    usersID     String
+    image       String
+    location    String
+    price       Float?
+    remainingCount  Int?  
+    users       UsersOnTour[]
+    count       String?
+    ordersPay   OdersPay[]
 
-  @@map("tour")
-}
+    @@map("tour")
+  }
 
-model Location {
-  id       String            @id @default(cuid())
-  image    String
-  country  String
-  usersID  String
-  location String
-  users    UsersOnLocation[]
-  price    Float?
+  model Location {
+    id       String            @id @default(cuid())
+    image    String
+    country  String
+    usersID  String
+    location String
+    users    UsersOnLocation[]
+    price    Float?
 
-  @@map("location")
-}
+    @@map("location")
+  }
 
-model Message {
-  id String @id @default(cuid())
-  message String
-  
+  model OdersPay {
+    id String @id @default(cuid())
+    usersID  String
+    tourID String
+    tour Tour @relation(fields: [tourID], references: [id])
+    user User @relation(fields: [usersID], references: [id])
 
-  @@map("message")
-}
+    @@map("oders_pay")
+  }
 
-model UsersOnTour {
-  user   User   @relation(fields: [userID], references: [id])
-  userID String
-  tour   Tour   @relation(fields: [tourID], references: [id])
-  tourID String
+  model Message {
+    id String @id @default(cuid())
+    message String
+    
 
-  @@id([tourID, userID])
-  @@map("users_on_tours")
-}
+    @@map("message")
+  }
 
-model UsersOnLocation {
-  user       User     @relation(fields: [userID], references: [id])
-  userID     String
-  location   Location @relation(fields: [locationID], references: [id])
-  locationID String
+  model UsersOnTour {
+    user   User   @relation(fields: [userID], references: [id])
+    userID String
+    tour   Tour   @relation(fields: [tourID], references: [id])
+    tourID String
 
-  @@id([locationID, userID])
-  @@map("users_on_locations")
-}
+    @@id([tourID, userID])
+    @@map("users_on_tours")
+  }
+
+  model UsersOnLocation {
+    user       User     @relation(fields: [userID], references: [id])
+    userID     String
+    location   Location @relation(fields: [locationID], references: [id])
+    locationID String
+
+    @@id([locationID, userID])
+    @@map("users_on_locations")
+  }

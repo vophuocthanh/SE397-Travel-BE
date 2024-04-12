@@ -6,6 +6,7 @@ import { router as authRouter } from './modules/auth/auth.controller';
 import { router as tourRouter } from './modules/tour/tour.controller';
 import { router as usersRouter } from './modules/users/users.controller';
 import { router as locationRouter } from './modules/location/location.controller';
+import { router as orderRouter } from './modules/orderPay/order_pay.controller';
 // import { router as categoryRouter } from './modules/category/category.controller';
 import { auth } from './middlewares/auth';
 import { errorFilter } from './middlewares/error-filter';
@@ -26,6 +27,7 @@ app.route('/', authRouter);
 app.route('/users', usersRouter);
 app.route('/tour', tourRouter);
 app.route('/location', locationRouter);
+app.route('/order', orderRouter);
 // app.all('*', auth).route('/category', categoryRouter);
 
 app.notFound((c) => c.json({ status: 404, message: 'Not found' }, 404));

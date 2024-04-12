@@ -12,6 +12,7 @@ Table users {
   fullName String
   location users_on_locations [not null]
   role Role [default: 'USER']
+  orderPay oders_pay [not null]
 }
 
 Table tour {
@@ -22,7 +23,10 @@ Table tour {
   image String [not null]
   location String [not null]
   price Float
+  remainingCount Int
   users users_on_tours [not null]
+  count String
+  ordersPay oders_pay [not null]
 }
 
 Table location {
@@ -33,6 +37,14 @@ Table location {
   location String [not null]
   users users_on_locations [not null]
   price Float
+}
+
+Table oders_pay {
+  id String [pk]
+  usersID String [not null]
+  tourID String [not null]
+  tour tour [not null]
+  user users [not null]
 }
 
 Table message {
@@ -66,6 +78,10 @@ Enum Role {
   USER
   ADMIN
 }
+
+Ref: oders_pay.tourID > tour.id
+
+Ref: oders_pay.usersID > users.id
 
 Ref: users_on_tours.userID > users.id
 

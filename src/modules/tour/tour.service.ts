@@ -35,7 +35,28 @@ export const TourService = {
         id: tourId,
       },
     });
-    return tour;
+    if (!tour) {
+      throw new BadRequestException('Tour not found');
+    }
+
+    const tourCount = await db.tour.count({
+      where: {
+        id: tourId,
+      },
+    });
+
+    if (tourCount === 0) {
+      throw new BadRequestException('Tour not found');
+    }
+
+    const maxCount = parseInt(tour.count || '0', 10);
+
+    const remainingCount = maxCount - tourCount;
+
+    return {
+      data: tour,
+      remainingCount: Math.max(0, remainingCount),
+    };
   },
   create: async (tour: Prisma.TourCreateInput) => {
     const createTour = await db.tour.create({
@@ -59,4 +80,41 @@ export const TourService = {
       },
     });
   },
+  // createAddCard: async (
+  //   tourId: string,
+  //   updateOrderPayDto: Prisma.OdersPayCreateInput,
+  //   users: string
+  // ) => {
+  //   try {
+  //     const newOrderPay = await db.odersPay.create({
+  //       data: {
+  //         tourID: tourId,
+  //         usersID: users,
+  //         ...updateOrderPayDto,
+  //       },
+  //     });
+  //     const tour = await db.tour.findUnique({
+  //       where: {
+  //         id: tourId,
+  //       },
+  //     });
+  //     if (!tour) {
+  //       throw new BadRequestException('Sản phẩm không tồn tại');
+  //     }
+
+  //     if (tour.remainingCount === 0) {
+  //       throw new BadRequestException('Sản phẩm đa het');
+  //     }
+
+  //     const updateTour = await db.tour.update({
+  //       where: {
+  //         id: tourId,
+  //       },
+  //       data: {
+  //         remainingCount: tour.remainingCount,
+  //       },
+  //     });
+  //     return updateTour;
+  //   } catch (error) {}
+  // },
 };
