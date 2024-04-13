@@ -78,7 +78,7 @@ export class AuthService {
 
     await mailService.sendMail({
       to: email,
-      html: `Click <a href="${WEB_URL}/reset-password?token=${accessToken}">here</a> to reset your password`,
+      html: `Click <a href="https://travel-memorytour.vercel.app/reset-password?token=${accessToken}">here</a> to reset your password`,
       subject: 'Reset  password',
     });
   }

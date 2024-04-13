@@ -17,7 +17,7 @@ app.use('*', logger());
 app.use(
   '*',
   cors({
-    origin: ['http://localhost:5173', 'https://se-397-travel.vercel.app'],
+    origin: ['http://localhost:5173', 'https://travel-memorytour.vercel.app'],
     credentials: true,
   })
 );
