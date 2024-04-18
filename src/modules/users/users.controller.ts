@@ -7,6 +7,14 @@ import { auth } from '@/middlewares/auth';
 export const router = new Hono();
 
 router
+  .get('/', auth, async (c) => {
+    const users = await UsersService.getUsers();
+    return c.json({
+      data: users,
+      total: users.length,
+      status: 200,
+    });
+  })
   .get('/me', auth, async (c) => {
     const { password, salt, ...user } = c.get('user');
 
