@@ -12,6 +12,14 @@ export const UsersService = {
 
     return me;
   },
+  getUserById: async (userID: string) => {
+    const user = await db.user.findUnique({
+      where: {
+        id: userID,
+      },
+    });
+    return user;
+  },
   getByUsername: async (username: string) => {
     const user = await db.user.findUnique({
       where: {
@@ -23,5 +31,12 @@ export const UsersService = {
   getUsers: async () => {
     const users = await db.user.findMany();
     return users;
+  },
+  deleteMe: async (userID: string) => {
+    await db.user.delete({
+      where: {
+        id: userID,
+      },
+    });
   },
 };

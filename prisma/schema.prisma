@@ -22,7 +22,6 @@
     fullName String?
     location UsersOnLocation[]
     role       Role?           @default(USER)
-    orderPay OdersPay[]
 
     @@map("users")
   }
@@ -65,7 +64,6 @@
     usersID  String
     tourID String
     tour Tour @relation(fields: [tourID], references: [id])
-    user User @relation(fields: [usersID], references: [id])
 
     @@map("oders_pay")
   }

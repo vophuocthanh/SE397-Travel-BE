@@ -12,7 +12,6 @@ Table users {
   fullName String
   location users_on_locations [not null]
   role Role [default: 'USER']
-  orderPay oders_pay [not null]
 }
 
 Table tour {
@@ -44,7 +43,6 @@ Table oders_pay {
   usersID String [not null]
   tourID String [not null]
   tour tour [not null]
-  user users [not null]
 }
 
 Table message {
@@ -80,8 +78,6 @@ Enum Role {
 }
 
 Ref: oders_pay.tourID > tour.id
-
-Ref: oders_pay.usersID > users.id
 
 Ref: users_on_tours.userID > users.id
 

@@ -32,4 +32,19 @@ router
       data: updatedMe,
       status: 200,
     });
+  })
+  .delete('/:id', auth, async (c) => {
+    const userId = c.req.param('id');
+    await UsersService.deleteMe(userId);
+    return c.json({
+      status: 200,
+    });
+  })
+  .get('/:id', auth, async (c) => {
+    const userId = c.req.param('id');
+    const user = await UsersService.getUserById(userId);
+    return c.json({
+      data: user,
+      status: 200,
+    });
   });
