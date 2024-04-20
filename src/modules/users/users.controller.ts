@@ -47,4 +47,13 @@ router
       data: user,
       status: 200,
     });
+  })
+  .put('/:id', auth, zValidator('json', updateMeDto), async (c) => {
+    const userId = c.req.param('id');
+    const updateMeDto = await c.req.json();
+    const updatedMe = await UsersService.updateUserAdmin(userId, updateMeDto);
+    return c.json({
+      data: updatedMe,
+      status: 200,
+    });
   });

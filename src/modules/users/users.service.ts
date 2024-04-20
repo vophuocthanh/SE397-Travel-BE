@@ -39,4 +39,16 @@ export const UsersService = {
       },
     });
   },
+  updateUserAdmin: async (
+    userID: string,
+    updateMeDto: { fullName: string }
+  ) => {
+    const user = await db.user.update({
+      where: {
+        id: userID,
+      },
+      data: updateMeDto,
+    });
+    return user;
+  },
 };

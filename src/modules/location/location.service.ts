@@ -14,10 +14,10 @@ export const LocationService = {
         },
       },
     });
-    const total = await db.tour.count({
+    const total = await db.location.count({
       where: {
         usersID: userId,
-        name: {
+        country: {
           contains: search,
         },
       },
