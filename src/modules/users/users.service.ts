@@ -1,5 +1,5 @@
 import { db } from '@/lib/db';
-import { User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 
 export const UsersService = {
   updateMe: async (user: User, updateMeDto: { fullName: string }) => {
@@ -41,7 +41,7 @@ export const UsersService = {
   },
   updateUserAdmin: async (
     userID: string,
-    updateMeDto: { fullName: string }
+    updateMeDto: Prisma.UserUpdateInput
   ) => {
     const user = await db.user.update({
       where: {
