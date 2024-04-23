@@ -41,8 +41,8 @@
     price       Float?
     remainingCount  Int?  
     users       UsersOnTour[]
-    count       String?
     ordersPay   OdersPay[]
+    count       String?
 
     @@map("tour")
   }
@@ -55,6 +55,8 @@
     location String
     users    UsersOnLocation[]
     price    Float?
+    remainingCount  Int?
+    count       String?
 
     @@map("location")
   }

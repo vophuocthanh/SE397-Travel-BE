@@ -35,7 +35,28 @@ export const LocationService = {
         id: locationId,
       },
     });
-    return location;
+
+    if (!location) {
+      throw new BadRequestException('Location not found');
+    }
+
+    const locationCount = await db.location.count({
+      where: {
+        id: locationId,
+      },
+    });
+
+    if (locationCount === 0) {
+      throw new BadRequestException('Location not found');
+    }
+
+    const maxCount = parseInt(location.count || '0', 10);
+
+    const remainingCount = maxCount - locationCount;
+    return {
+      data: location,
+      remainingCount: Math.max(0, remainingCount),
+    };
   },
   create: async (location: Prisma.LocationCreateInput) => {
     const createLocation = await db.location.create({

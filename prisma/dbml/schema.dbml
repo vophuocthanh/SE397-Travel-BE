@@ -24,8 +24,8 @@ Table tour {
   price Float
   remainingCount Int
   users users_on_tours [not null]
-  count String
   ordersPay oders_pay [not null]
+  count String
 }
 
 Table location {
@@ -36,6 +36,8 @@ Table location {
   location String [not null]
   users users_on_locations [not null]
   price Float
+  remainingCount Int
+  count String
 }
 
 Table oders_pay {

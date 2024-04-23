@@ -1,5 +1,5 @@
 import { db } from '@/lib/db';
-import { BadRequestException } from '@/utils/exceptions';
+import { BadRequestException, UnauthorizedException } from '@/utils/exceptions';
 import { Prisma } from '@prisma/client';
 
 export const OrderPayService = {
@@ -15,35 +15,25 @@ export const OrderPayService = {
     };
   },
   createAddCard: async (
-    orderDto: Prisma.OdersPayCreateInput,
-    tourId: string
+    tourId: string,
+    orderDto: Prisma.OdersPayCreateInput
   ) => {
-    await db.odersPay.create({
-      data: {
-        ...orderDto,
-      },
-    });
-    const tour = await db.tour.findUnique({
-      where: {
-        id: tourId,
-      },
-    });
-    if (!tour) {
-      throw new BadRequestException('Sản phẩm không tồn tại');
+    try {
+      const newOrderPay = await db.odersPay.create({
+        data: {
+          ...orderDto,
+        },
+      });
+      return newOrderPay;
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P1001'
+      ) {
+        throw new UnauthorizedException(`User ${tourId} not found`);
+      } else {
+        throw error;
+      }
     }
-
-    if (tour.remainingCount === 0) {
-      throw new BadRequestException('Sản phẩm đa het');
-    }
-
-    const updateTour = await db.tour.update({
-      where: {
-        id: tourId,
-      },
-      data: {
-        remainingCount: tour.remainingCount,
-      },
-    });
-    return updateTour;
   },
 };
