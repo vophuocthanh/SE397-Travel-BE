@@ -26,6 +26,18 @@ Table tour {
   users users_on_tours [not null]
   ordersPay oders_pay [not null]
   count String
+  cuisine String
+  suitable_subject String
+  vchouer String
+  time_out String
+  ideal_time String
+  image2 String
+  image3 String
+  image4 String
+  transport String
+  hotel String
+  starting_gate String
+  sight_seeing String
 }
 
 Table location {
@@ -38,6 +50,18 @@ Table location {
   price Float
   remainingCount Int
   count String
+  cuisine String
+  suitable_subject String
+  vchouer String
+  time_out String
+  ideal_time String
+  image2 String
+  image3 String
+  image4 String
+  transport String
+  hotel String
+  starting_gate String
+  sight_seeing String
 }
 
 Table oders_pay {
