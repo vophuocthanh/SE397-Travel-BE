@@ -64,6 +64,7 @@
     image    String
     country  String
     usersID  String
+    description String?
     location String
     users    UsersOnLocation[]
     price    Float?

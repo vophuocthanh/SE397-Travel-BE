@@ -45,6 +45,7 @@ Table location {
   image String [not null]
   country String [not null]
   usersID String [not null]
+  description String
   location String [not null]
   users users_on_locations [not null]
   price Float
