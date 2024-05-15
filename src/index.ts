@@ -7,6 +7,7 @@ import { router as tourRouter } from './modules/tour/tour.controller';
 import { router as usersRouter } from './modules/users/users.controller';
 import { router as locationRouter } from './modules/location/location.controller';
 import { router as orderRouter } from './modules/orderPay/order_pay.controller';
+import { router as messageRouter } from './modules/messages/message.controller';
 // import { router as categoryRouter } from './modules/category/category.controller';
 import { auth } from './middlewares/auth';
 import { errorFilter } from './middlewares/error-filter';
@@ -28,12 +29,18 @@ app.route('/users', usersRouter);
 app.route('/tour', tourRouter);
 app.route('/location', locationRouter);
 app.route('/order', orderRouter);
+app.route('/message', messageRouter);
 // app.all('*', auth).route('/category', categoryRouter);
 
 app.notFound((c) => c.json({ status: 404, message: 'Not found' }, 404));
 
 app.onError(errorFilter);
 
+serve({
+  fetch: app.fetch,
+  port: 5000,
+});
+
 serve(app, () => {
-  console.log('🤖 Server is running on http://localhost:3000');
+  console.log('🤖 Server is running on http://localhost:5000');
 });

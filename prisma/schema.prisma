@@ -55,6 +55,7 @@
     hotel String?
     starting_gate String?
     sight_seeing String?
+    message Message[]
 
     @@map("tour")
   }
@@ -98,8 +99,11 @@
   model Message {
     id String @id @default(cuid())
     message String
-    
+    userID  String?
+    tourID String?
+    tour Tour? @relation(fields: [tourID], references: [id])
 
+    
     @@map("message")
   }
 

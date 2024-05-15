@@ -38,6 +38,7 @@ Table tour {
   hotel String
   starting_gate String
   sight_seeing String
+  message message [not null]
 }
 
 Table location {
@@ -75,6 +76,9 @@ Table oders_pay {
 Table message {
   id String [pk]
   message String [not null]
+  userID String
+  tourID String
+  tour tour
 }
 
 Table users_on_tours {
@@ -105,6 +109,8 @@ Enum Role {
 }
 
 Ref: oders_pay.tourID > tour.id
+
+Ref: message.tourID > tour.id
 
 Ref: users_on_tours.userID > users.id
 
