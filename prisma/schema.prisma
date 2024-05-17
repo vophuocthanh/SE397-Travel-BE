@@ -84,6 +84,8 @@
     starting_gate String?
     sight_seeing String?
 
+    messageLocation MessageLocation[]
+
     @@map("location")
   }
 
@@ -105,6 +107,15 @@
 
     
     @@map("message")
+  }
+  model MessageLocation {
+    id String @id @default(cuid())
+    message String
+    userID  String?
+    locationID String?
+    Location Location? @relation(fields: [locationID], references: [id])
+
+    @@map("message_location")
   }
 
   model UsersOnTour {
