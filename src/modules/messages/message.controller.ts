@@ -9,8 +9,9 @@ import { MessageService } from '@/modules/messages/message.service';
 export const router = new Hono();
 
 router
-  .get('', auth, async (c) => {
-    const messages = await MessageService.getAll();
+  .get('/:tourId', auth, async (c) => {
+    const tourId = c.req.param('tourId');
+    const messages = await MessageService.getAll(tourId);
     return c.json({
       data: messages,
     });

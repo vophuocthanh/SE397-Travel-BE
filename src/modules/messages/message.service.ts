@@ -3,8 +3,14 @@ import { Prisma, User } from '@prisma/client';
 import { BadRequestException } from '@/utils/exceptions';
 
 export const MessageService = {
-  getAll: async () => {
-    const message = await db.message.findMany();
+  getAll: async (tourId: string) => {
+    const message = await db.message.findMany({
+      where: {
+        tour: {
+          id: tourId,
+        },
+      },
+    });
     return {
       data: message,
     };
