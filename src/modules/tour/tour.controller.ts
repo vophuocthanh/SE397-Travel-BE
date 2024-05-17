@@ -13,7 +13,7 @@ router
     const user = c.get('user');
     const search = c.req.query('search');
     const page = +c.req.query('page') || 1;
-    const limit = +c.req.query('limit') || 3;
+    const limit = +c.req.query('limit') || 6;
     const pagination = {
       skip: (page - 1) * limit,
     };
