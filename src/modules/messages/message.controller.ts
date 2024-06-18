@@ -1,15 +1,11 @@
-import { db } from '@/lib/db';
-import { paginationSchema } from '@/utils/schema';
-import { zValidator } from '@hono/zod-validator';
-import { Hono } from 'hono';
 import { auth } from '@/middlewares/auth';
-import { checkRole } from '@/middlewares/role';
 import { MessageService } from '@/modules/messages/message.service';
+import { Hono } from 'hono';
 
 export const router = new Hono();
 
 router
-  .get('/:tourId', auth, async (c) => {
+  .get('/:tourId', async (c) => {
     const tourId = c.req.param('tourId');
     const messages = await MessageService.getAll(tourId);
     return c.json({
